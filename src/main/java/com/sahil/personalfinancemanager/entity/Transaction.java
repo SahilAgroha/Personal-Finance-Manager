@@ -33,8 +33,20 @@ public class Transaction {
     public Transaction() {
     }
 
+    public Transaction(BigDecimal amount, LocalDate date, String description, Category category, User user) {
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.category = category;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BigDecimal getAmount() {

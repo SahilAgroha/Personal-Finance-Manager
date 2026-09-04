@@ -37,7 +37,6 @@ public class GoalService {
         this.userRepository = userRepository;
     }
 
-
     // =========================================================
     // CREATE GOAL
     // =========================================================
@@ -105,7 +104,6 @@ public class GoalService {
         return toResponse(savedGoal);
     }
 
-
     // =========================================================
     // GET ALL GOALS
     // =========================================================
@@ -123,7 +121,6 @@ public class GoalService {
                 .map(this::toResponse)
                 .toList();
     }
-
 
     // =========================================================
     // GET GOAL BY ID
@@ -150,7 +147,6 @@ public class GoalService {
 
         return toResponse(goal);
     }
-
 
     // =========================================================
     // UPDATE GOAL
@@ -242,7 +238,6 @@ public class GoalService {
         return toResponse(updatedGoal);
     }
 
-
     // =========================================================
     // DELETE GOAL
     // =========================================================
@@ -268,7 +263,6 @@ public class GoalService {
 
         savingsGoalRepository.delete(goal);
     }
-
 
     // =========================================================
     // ENTITY -> RESPONSE
@@ -304,7 +298,6 @@ public class GoalService {
                 remainingAmount
         );
     }
-
 
     // =========================================================
     // CALCULATE CURRENT PROGRESS
@@ -375,7 +368,6 @@ public class GoalService {
                 );
     }
 
-
     // =========================================================
     // CALCULATE PROGRESS %
     // =========================================================
@@ -412,7 +404,6 @@ public class GoalService {
                 );
     }
 
-
     // =========================================================
     // CALCULATE REMAINING AMOUNT
     // =========================================================
@@ -421,6 +412,15 @@ public class GoalService {
             BigDecimal currentProgress,
             BigDecimal targetAmount
     ) {
+
+        // A null target amount means there is no remaining
+        // amount to calculate.
+        if (targetAmount == null) {
+            return BigDecimal.ZERO.setScale(
+                    2,
+                    RoundingMode.HALF_UP
+            );
+        }
 
         BigDecimal progress =
                 currentProgress.max(BigDecimal.ZERO);
@@ -433,7 +433,6 @@ public class GoalService {
                         RoundingMode.HALF_UP
                 );
     }
-
 
     // =========================================================
     // CURRENT USER

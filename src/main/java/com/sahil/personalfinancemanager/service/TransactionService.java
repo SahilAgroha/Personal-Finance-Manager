@@ -84,22 +84,14 @@ public class TransactionService {
             String category
     ) {
 
-        // Validate date range
         validateDateRange(startDate, endDate);
 
-        // Get authenticated user
         User user = getCurrentUser();
 
         List<Transaction> transactions;
 
-        // -----------------------------------------------------
         // No filters
-        // GET /api/transactions
-        // -----------------------------------------------------
-
-        if (startDate == null
-                && endDate == null
-                && category == null) {
+        if (startDate == null && category == null) {
 
             transactions =
                     transactionRepository.findAllByUserId(
@@ -107,12 +99,8 @@ public class TransactionService {
                     );
         }
 
-        // -----------------------------------------------------
-        // Category + Date Range
-        // -----------------------------------------------------
-
+        // Date range + category
         else if (startDate != null
-                && endDate != null
                 && category != null
                 && !category.isBlank()) {
 
@@ -126,12 +114,8 @@ public class TransactionService {
                             );
         }
 
-        // -----------------------------------------------------
-        // Date Range
-        // -----------------------------------------------------
-
-        else if (startDate != null
-                && endDate != null) {
+        // Date range
+        else if (startDate != null) {
 
             transactions =
                     transactionRepository
@@ -142,10 +126,7 @@ public class TransactionService {
                             );
         }
 
-        // -----------------------------------------------------
-        // Category
-        // -----------------------------------------------------
-
+        // Category only
         else if (category != null
                 && !category.isBlank()) {
 
@@ -157,10 +138,7 @@ public class TransactionService {
                             );
         }
 
-        // -----------------------------------------------------
         // Invalid filter
-        // -----------------------------------------------------
-
         else {
 
             throw new BadRequestException(
