@@ -16,6 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: personal_finance
 
   jackson:
     time-zone: UTC
